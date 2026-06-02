@@ -787,13 +787,15 @@ static void input(const sapp_event* ev) {
         sapp_quit();
         return;
     }
-    if ((ev->type == SAPP_EVENTTYPE_KEY_DOWN) &&
-        (ev->key_code == SAPP_KEYCODE_ESCAPE) &&
-        (!state.input.enabled || (state.gamestate == GAMESTATE_INTRO) || game_over_active))
-    {
-        sapp_request_quit();
-        return;
-    }
+    #if !defined(__EMSCRIPTEN__)
+        if ((ev->type == SAPP_EVENTTYPE_KEY_DOWN) &&
+            (ev->key_code == SAPP_KEYCODE_ESCAPE) &&
+            (!state.input.enabled || (state.gamestate == GAMESTATE_INTRO) || game_over_active))
+        {
+            sapp_request_quit();
+            return;
+        }
+    #endif
     if (state.input.enabled) {
         if ((ev->type == SAPP_EVENTTYPE_KEY_DOWN) || (ev->type == SAPP_EVENTTYPE_KEY_UP)) {
             bool btn_down = ev->type == SAPP_EVENTTYPE_KEY_DOWN;
@@ -2302,7 +2304,9 @@ static void game_tick(void) {
     if (now(state.game.game_over)) {
         // display game over string
         vid_color_text(i2(9,20), 0x01, "GAME  OVER");
-        vid_color_text(i2(QUIT_HINT_POS_X, QUIT_HINT_POS_Y), 0x09, "PRESS ESC TO QUIT");
+        #if !defined(__EMSCRIPTEN__)
+            vid_color_text(i2(QUIT_HINT_POS_X, QUIT_HINT_POS_Y), 0x09, "PRESS ESC TO QUIT");
+        #endif
         input_disable();
         start_after(&state.gfx.fadeout, GAMEOVER_TICKS);
         start_after(&state.intro.started, GAMEOVER_TICKS+FADE_TICKS);
@@ -2402,7 +2406,9 @@ static void intro_tick(void) {
             vid_color_text(i2(3,31), 3, "PRESS ANY KEY TO START!");
         }
     }
-    vid_color_text(i2(QUIT_HINT_POS_X, QUIT_HINT_POS_Y), 3, "PRESS ESC TO QUIT");
+    #if !defined(__EMSCRIPTEN__)
+        vid_color_text(i2(QUIT_HINT_POS_X, QUIT_HINT_POS_Y), 3, "PRESS ESC TO QUIT");
+    #endif
 
     // FIXME: animated chase sequence
 
