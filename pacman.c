@@ -685,6 +685,7 @@ static void input(const sapp_event*);
 
 static void start(trigger_t* t);
 static bool now(trigger_t t);
+static bool after(trigger_t t, uint32_t ticks);
 
 static void intro_tick(void);
 static void game_tick(void);
@@ -785,7 +786,7 @@ static void input(const sapp_event* ev) {
     }
     if ((ev->type == SAPP_EVENTTYPE_KEY_DOWN) &&
         (ev->key_code == SAPP_KEYCODE_ESCAPE) &&
-        !state.input.enabled)
+        (!state.input.enabled || (state.gamestate == GAMESTATE_INTRO) || after(state.game.game_over, 0)))
     {
         sapp_request_quit();
         return;
@@ -2298,6 +2299,7 @@ static void game_tick(void) {
     if (now(state.game.game_over)) {
         // display game over string
         vid_color_text(i2(9,20), 0x01, "GAME  OVER");
+        vid_color_text(i2(6,34), 0x09, "PRESS ESC TO QUIT");
         input_disable();
         start_after(&state.gfx.fadeout, GAMEOVER_TICKS);
         start_after(&state.intro.started, GAMEOVER_TICKS+FADE_TICKS);
@@ -2397,6 +2399,7 @@ static void intro_tick(void) {
             vid_color_text(i2(3,31), 3, "PRESS ANY KEY TO START!");
         }
     }
+    vid_color_text(i2(6,33), 3, "PRESS ESC TO QUIT");
 
     // FIXME: animated chase sequence
 
