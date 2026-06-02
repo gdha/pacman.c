@@ -819,7 +819,7 @@ static void input(const sapp_event* ev) {
                     }
                     break;
                 case SAPP_KEYCODE_ESCAPE:
-                    state.input.esc = state.input.anykey = btn_down;
+                    state.input.esc = btn_down;
                     break;
                 default:
                     state.input.anykey = btn_down;
@@ -2309,7 +2309,7 @@ static void game_tick(void) {
         start_after(&state.intro.started, GAMEOVER_TICKS+FADE_TICKS);
     }
 
-    #if DBG_ESCAPE
+    #if DBG_ESCAPE || defined(__EMSCRIPTEN__)
         if (state.input.esc) {
             input_disable();
             start(&state.gfx.fadeout);
