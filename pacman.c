@@ -779,6 +779,17 @@ static void frame(void) {
 }
 
 static void input(const sapp_event* ev) {
+    if (ev->type == SAPP_EVENTTYPE_QUIT_REQUESTED) {
+        sapp_quit();
+        return;
+    }
+    if ((ev->type == SAPP_EVENTTYPE_KEY_DOWN) &&
+        (ev->key_code == SAPP_KEYCODE_ESCAPE) &&
+        !state.input.enabled)
+    {
+        sapp_request_quit();
+        return;
+    }
     if (state.input.enabled) {
         if ((ev->type == SAPP_EVENTTYPE_KEY_DOWN) || (ev->type == SAPP_EVENTTYPE_KEY_UP)) {
             bool btn_down = ev->type == SAPP_EVENTTYPE_KEY_DOWN;
