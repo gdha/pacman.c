@@ -685,7 +685,6 @@ static void input(const sapp_event*);
 
 static void start(trigger_t* t);
 static bool now(trigger_t t);
-static bool after(trigger_t t, uint32_t ticks);
 
 static void intro_tick(void);
 static void game_tick(void);
@@ -780,13 +779,15 @@ static void frame(void) {
 }
 
 static void input(const sapp_event* ev) {
+    const bool game_over_active = (state.game.game_over.tick != DISABLED_TICKS) &&
+        (state.timing.tick >= state.game.game_over.tick);
     if (ev->type == SAPP_EVENTTYPE_QUIT_REQUESTED) {
         sapp_quit();
         return;
     }
     if ((ev->type == SAPP_EVENTTYPE_KEY_DOWN) &&
         (ev->key_code == SAPP_KEYCODE_ESCAPE) &&
-        (!state.input.enabled || (state.gamestate == GAMESTATE_INTRO) || after(state.game.game_over, 0)))
+        (!state.input.enabled || (state.gamestate == GAMESTATE_INTRO) || game_over_active))
     {
         sapp_request_quit();
         return;
