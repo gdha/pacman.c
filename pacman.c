@@ -183,6 +183,8 @@
 #define NUM_STATUS_FRUITS    (7)    // max number of displayed fruits at bottom right
 #define NUM_DOTS             (244)  // 240 small dots + 4 pills
 #define NUM_PILLS            (4)    // number of energizer pills on playfield
+#define QUIT_HINT_POS_X      (6)
+#define QUIT_HINT_POS_Y      (34)
 #define ANTEPORTAS_X         (14*TILE_WIDTH)  // pixel position of the ghost house enter/leave point
 #define ANTEPORTAS_Y         (14*TILE_HEIGHT + TILE_HEIGHT/2)
 #define GHOST_EATEN_FREEZE_TICKS (60)  // number of ticks the game freezes after Pacman eats a ghost
@@ -779,13 +781,15 @@ static void frame(void) {
 }
 
 static void input(const sapp_event* ev) {
+    const bool game_over_active = (state.game.game_over.tick != DISABLED_TICKS) &&
+        (state.timing.tick >= state.game.game_over.tick);
     if (ev->type == SAPP_EVENTTYPE_QUIT_REQUESTED) {
         sapp_quit();
         return;
     }
     if ((ev->type == SAPP_EVENTTYPE_KEY_DOWN) &&
         (ev->key_code == SAPP_KEYCODE_ESCAPE) &&
-        !state.input.enabled)
+        (!state.input.enabled || (state.gamestate == GAMESTATE_INTRO) || game_over_active))
     {
         sapp_request_quit();
         return;
@@ -2298,6 +2302,7 @@ static void game_tick(void) {
     if (now(state.game.game_over)) {
         // display game over string
         vid_color_text(i2(9,20), 0x01, "GAME  OVER");
+        vid_color_text(i2(QUIT_HINT_POS_X, QUIT_HINT_POS_Y), 0x09, "PRESS ESC TO QUIT");
         input_disable();
         start_after(&state.gfx.fadeout, GAMEOVER_TICKS);
         start_after(&state.intro.started, GAMEOVER_TICKS+FADE_TICKS);
@@ -2397,6 +2402,7 @@ static void intro_tick(void) {
             vid_color_text(i2(3,31), 3, "PRESS ANY KEY TO START!");
         }
     }
+    vid_color_text(i2(QUIT_HINT_POS_X, QUIT_HINT_POS_Y), 3, "PRESS ESC TO QUIT");
 
     // FIXME: animated chase sequence
 
