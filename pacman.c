@@ -782,14 +782,13 @@ static void frame(void) {
 
 static void input(const sapp_event* ev) {
     if (ev->type == SAPP_EVENTTYPE_QUIT_REQUESTED) {
-        sapp_quit();
         return;
     }
     #if !defined(__EMSCRIPTEN__)
         if ((ev->type == SAPP_EVENTTYPE_KEY_DOWN) &&
             (ev->key_code == SAPP_KEYCODE_ESCAPE))
         {
-            sapp_quit();
+            sapp_request_quit();
             return;
         }
     #endif
