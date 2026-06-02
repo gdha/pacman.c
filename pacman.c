@@ -792,7 +792,7 @@ static void input(const sapp_event* ev) {
             (ev->key_code == SAPP_KEYCODE_ESCAPE) &&
             (!state.input.enabled || (state.gamestate == GAMESTATE_INTRO) || game_over_active))
         {
-            sapp_request_quit();
+            sapp_quit();
             return;
         }
     #endif
