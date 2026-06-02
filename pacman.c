@@ -781,16 +781,13 @@ static void frame(void) {
 }
 
 static void input(const sapp_event* ev) {
-    const bool game_over_active = (state.game.game_over.tick != DISABLED_TICKS) &&
-        (state.timing.tick >= state.game.game_over.tick);
     if (ev->type == SAPP_EVENTTYPE_QUIT_REQUESTED) {
         sapp_quit();
         return;
     }
     #if !defined(__EMSCRIPTEN__)
         if ((ev->type == SAPP_EVENTTYPE_KEY_DOWN) &&
-            (ev->key_code == SAPP_KEYCODE_ESCAPE) &&
-            (!state.input.enabled || (state.gamestate == GAMESTATE_INTRO) || game_over_active))
+            (ev->key_code == SAPP_KEYCODE_ESCAPE))
         {
             sapp_quit();
             return;
