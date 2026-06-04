@@ -784,10 +784,9 @@ static void frame(void) {
             if (state.gfx.quit.tick != DISABLED_TICKS &&
                 state.timing.tick >= state.gfx.quit.tick)
             {
-                fprintf(stderr, "DBG: quit trigger fired at tick %u\n", state.timing.tick);
-                state.gfx.quit.tick = DISABLED_TICKS;  // prevent repeated calls
-                sapp_request_quit();
-                fprintf(stderr, "DBG: sapp_request_quit() called\n");
+                fprintf(stderr, "DBG: quit trigger fired at tick %u - calling sapp_quit()\n", state.timing.tick);
+                state.gfx.quit.tick = DISABLED_TICKS;
+                sapp_quit();
             }
         #endif
     }
@@ -798,7 +797,7 @@ static void frame(void) {
 static void input(const sapp_event* ev) {
     if (ev->type == SAPP_EVENTTYPE_QUIT_REQUESTED) {
         // returning without calling sapp_cancel_quit() allows the quit to proceed
-        fprintf(stderr, "DBG: QUIT_REQUESTED event received\n");
+        fprintf(stderr, "DBG: QUIT_REQUESTED event received - returning to allow quit\n");
         return;
     }
     if ((ev->type == SAPP_EVENTTYPE_KEY_DOWN) || (ev->type == SAPP_EVENTTYPE_KEY_UP)) {
@@ -844,8 +843,11 @@ static void input(const sapp_event* ev) {
 }
 
 static void cleanup(void) {
+    fprintf(stderr, "DBG: cleanup() called\n");
     snd_shutdown();
+    fprintf(stderr, "DBG: snd_shutdown done\n");
     gfx_shutdown();
+    fprintf(stderr, "DBG: gfx_shutdown done\n");
 }
 
 /*== GRAB BAG OF HELPER FUNCTIONS ============================================*/
