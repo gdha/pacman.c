@@ -687,6 +687,7 @@ static void cleanup(void);
 static void input(const sapp_event*);
 
 static void start(trigger_t* t);
+static void start_after(trigger_t* t, uint32_t ticks);
 static bool now(trigger_t t);
 
 static void intro_tick(void);
@@ -779,8 +780,11 @@ static void frame(void) {
 
         // quit after fade-out completes (triggered by ESC on native desktop)
         #if !defined(__EMSCRIPTEN__)
-            if (now(state.gfx.quit)) {
-                sapp_quit();
+            if (state.gfx.quit.tick != DISABLED_TICKS &&
+                state.timing.tick >= state.gfx.quit.tick)
+            {
+                state.gfx.quit.tick = DISABLED_TICKS;  // prevent repeated calls
+                sapp_request_quit();
             }
         #endif
     }
@@ -790,6 +794,7 @@ static void frame(void) {
 
 static void input(const sapp_event* ev) {
     if (ev->type == SAPP_EVENTTYPE_QUIT_REQUESTED) {
+        // returning without calling sapp_cancel_quit() allows the quit to proceed
         return;
     }
     if ((ev->type == SAPP_EVENTTYPE_KEY_DOWN) || (ev->type == SAPP_EVENTTYPE_KEY_UP)) {
