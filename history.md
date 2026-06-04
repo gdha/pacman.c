@@ -21,3 +21,10 @@ The craze quickly spread beyond the arcade. Home conversions brought Pac-Man int
 The game itself proved far deeper than it initially appeared. Players discovered its deterministic nature could be exploited through memorized movement "patterns," and a dedicated community of expert players emerged. In 1999, Billy Mitchell of Hollywood, Florida became the first person to achieve the game's maximum possible score of 3,333,360 — completing 256 consecutive levels without losing a single life and eating every possible dot, ghost, and bonus item. That same level 256 held a famous secret: a bug caused by an integer overflow in the game's Z-80 CPU rendered the right half of the screen a garbled mess of random characters, making it effectively the game's unintentional final level — known among players as the "split screen" and among developers as the "kill screen."
 
 More than four decades later, Pac-Man remains the best-selling coin-operated arcade game in history and one of the most recognized fictional characters in the world. A cabinet sits on permanent display at the Smithsonian Institution in Washington, D.C., and the game was later honored as part of the inaugural class of the World Video Game Hall of Fame. In 2010, Google's fully playable Pac-Man doodle introduced the yellow maze-runner to a new generation on the web, proving that the design still had the power to stop people in their tracks. The term "Pac-Man defense" has even entered the business world as a name for a particular hostile takeover strategy. What began as one young designer's quiet rebellion against the shoot-'em-up craze became a genuine cultural landmark.
+
+## References
+
+- [The Pac-Man Dossier (Jamey Pittman)](https://pacman.holenet.info/)
+- [The Strong National Museum of Play: Pac-Man (World Video Game Hall of Fame)](https://www.museumofplay.org/games/pac-man/)
+- [Google Doodles Archive: PAC-MAN](https://doodles.google/doodle/30th-anniversary-of-pac-man/)
+- [Smithsonian Magazine: "Pac-Man Turns 30"](https://www.smithsonianmag.com/arts-culture/pac-man-turns-30-132375707/)
