@@ -139,6 +139,7 @@
 #include <assert.h>
 #include <string.h> // memset()
 #include <stdlib.h> // abs()
+#include <stdio.h>  // fprintf() for debug logging
 
 // config defines and global constants
 #define AUDIO_VOLUME (0.5f)
@@ -783,8 +784,10 @@ static void frame(void) {
             if (state.gfx.quit.tick != DISABLED_TICKS &&
                 state.timing.tick >= state.gfx.quit.tick)
             {
+                fprintf(stderr, "DBG: quit trigger fired at tick %u\n", state.timing.tick);
                 state.gfx.quit.tick = DISABLED_TICKS;  // prevent repeated calls
                 sapp_request_quit();
+                fprintf(stderr, "DBG: sapp_request_quit() called\n");
             }
         #endif
     }
@@ -795,6 +798,7 @@ static void frame(void) {
 static void input(const sapp_event* ev) {
     if (ev->type == SAPP_EVENTTYPE_QUIT_REQUESTED) {
         // returning without calling sapp_cancel_quit() allows the quit to proceed
+        fprintf(stderr, "DBG: QUIT_REQUESTED event received\n");
         return;
     }
     if ((ev->type == SAPP_EVENTTYPE_KEY_DOWN) || (ev->type == SAPP_EVENTTYPE_KEY_UP)) {
@@ -803,6 +807,7 @@ static void input(const sapp_event* ev) {
             // always track ESC regardless of whether input is enabled,
             // so game_tick/intro_tick can do a clean fade-out before quitting
             if (ev->key_code == SAPP_KEYCODE_ESCAPE) {
+                fprintf(stderr, "DBG: ESC key event, btn_down=%d, input.enabled=%d\n", btn_down, state.input.enabled);
                 state.input.esc = btn_down;
                 return;
             }
@@ -2326,10 +2331,12 @@ static void game_tick(void) {
         }
     #else
         if (state.input.esc) {
+            fprintf(stderr, "DBG: game_tick ESC detected at tick %u, setting quit after %d ticks\n", state.timing.tick, FADE_TICKS);
             input_disable();
             state.input.esc = false;
             start(&state.gfx.fadeout);
             start_after(&state.gfx.quit, FADE_TICKS);
+            fprintf(stderr, "DBG: fadeout.tick=%u quit.tick=%u\n", state.gfx.fadeout.tick, state.gfx.quit.tick);
         }
     #endif
 
