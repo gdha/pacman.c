@@ -138,7 +138,7 @@
 #include "sokol_letterbox.h"
 #include <assert.h>
 #include <string.h> // memset()
-#include <stdlib.h> // abs(), exit()
+#include <stdlib.h> // abs()
 
 // config defines and global constants
 #define AUDIO_VOLUME (0.5f)
@@ -784,9 +784,7 @@ static void frame(void) {
                 state.timing.tick >= state.gfx.quit.tick)
             {
                 state.gfx.quit.tick = DISABLED_TICKS;
-                snd_shutdown();
-                gfx_shutdown();
-                exit(0);
+                sapp_request_quit();
             }
         #endif
     }
