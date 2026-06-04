@@ -1,14 +1,48 @@
-.TH "Pacman" 6 "November 11th, 2025"
+.TH "PACMAN" 6 "June 2026" "pacman.c"
 .SH NAME
-pacman.c \- Simple Pacman clone
+pacman \- Pacman clone written in C99
 .SH SYNOPSIS
-pacman.c
+.B pacman
 .SH DESCRIPTION
-Pacman is a yellow, circular character that you move through a maze
-(arrow keys), eating small dots while avoiding colorful ghosts.
-When he eats special Power dots, he can temporarily turn the tables
-and eat the ghosts for extra points.
-
-You can switch between fullscreen and windowed mode using the f key.
-.SH AUTHORS
-This clone was written by Andre Weissflog.
+.B pacman
+is a desktop Pacman clone implemented in a single C source file and built on the
+sokol platform abstraction headers.
+.PP
+Guide Pacman through the maze, eat all dots, avoid ghosts, and collect pills to
+temporarily turn ghosts vulnerable for bonus points.
+.SH CONTROLS
+.TP
+.B Arrow keys / W A S D
+Move Pacman.
+.TP
+.B F
+Toggle fullscreen mode.
+.TP
+.B Esc
+Quit (native desktop builds).
+.SH GAMEPLAY
+The game starts with three lives. A round is cleared after all dots and pills are
+eaten. Bonus fruit may appear during a round and awards additional points.
+.SH FILES
+.TP
+.I pacman.c
+Main source file.
+.TP
+.I CMakeLists.txt
+Build configuration.
+.SH BUILDING
+Typical build steps:
+.PP
+.nf
+cmake -S . -B build
+cmake --build build
+./build/pacman
+.fi
+.PP
+On Linux, OpenGL, X11, and ALSA development headers/libraries are required.
+.SH PROJECT
+Homepage:
+.PP
+.I https://github.com/floooh/pacman.c
+.SH AUTHOR
+Andre Weissflog
