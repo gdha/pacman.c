@@ -491,6 +491,7 @@ static struct {
         // fade-in/out timers and current value
         trigger_t fadein;
         trigger_t fadeout;
+        trigger_t quit;     // fires after fade-out completes to quit the app
         uint8_t fade;
 
         // the 36x28 tile framebuffer
@@ -775,6 +776,13 @@ static void frame(void) {
                 game_tick();
                 break;
         }
+
+        // quit after fade-out completes (triggered by ESC on native desktop)
+        #if !defined(__EMSCRIPTEN__)
+            if (now(state.gfx.quit)) {
+                sapp_quit();
+            }
+        #endif
     }
     gfx_draw();
     snd_frame(frame_time_ns);
@@ -784,17 +792,17 @@ static void input(const sapp_event* ev) {
     if (ev->type == SAPP_EVENTTYPE_QUIT_REQUESTED) {
         return;
     }
-    #if !defined(__EMSCRIPTEN__)
-        if ((ev->type == SAPP_EVENTTYPE_KEY_DOWN) &&
-            (ev->key_code == SAPP_KEYCODE_ESCAPE))
-        {
-            sapp_request_quit();
-            return;
-        }
-    #endif
-    if (state.input.enabled) {
-        if ((ev->type == SAPP_EVENTTYPE_KEY_DOWN) || (ev->type == SAPP_EVENTTYPE_KEY_UP)) {
-            bool btn_down = ev->type == SAPP_EVENTTYPE_KEY_DOWN;
+    if ((ev->type == SAPP_EVENTTYPE_KEY_DOWN) || (ev->type == SAPP_EVENTTYPE_KEY_UP)) {
+        bool btn_down = ev->type == SAPP_EVENTTYPE_KEY_DOWN;
+        #if !defined(__EMSCRIPTEN__)
+            // always track ESC regardless of whether input is enabled,
+            // so game_tick/intro_tick can do a clean fade-out before quitting
+            if (ev->key_code == SAPP_KEYCODE_ESCAPE) {
+                state.input.esc = btn_down;
+                return;
+            }
+        #endif
+        if (state.input.enabled) {
             switch (ev->key_code) {
                 case SAPP_KEYCODE_UP:
                 case SAPP_KEYCODE_W:
@@ -816,9 +824,6 @@ static void input(const sapp_event* ev) {
                     if (btn_down) {
                         sapp_toggle_fullscreen();
                     }
-                    break;
-                case SAPP_KEYCODE_ESCAPE:
-                    state.input.esc = btn_down;
                     break;
                 default:
                     state.input.anykey = btn_down;
@@ -2308,11 +2313,18 @@ static void game_tick(void) {
         start_after(&state.intro.started, GAMEOVER_TICKS+FADE_TICKS);
     }
 
-    #if DBG_ESCAPE || defined(__EMSCRIPTEN__)
+    #if defined(__EMSCRIPTEN__)
         if (state.input.esc) {
             input_disable();
             start(&state.gfx.fadeout);
             start_after(&state.intro.started, FADE_TICKS);
+        }
+    #else
+        if (state.input.esc) {
+            input_disable();
+            state.input.esc = false;
+            start(&state.gfx.fadeout);
+            start_after(&state.gfx.quit, FADE_TICKS);
         }
     #endif
 
@@ -2414,6 +2426,16 @@ static void intro_tick(void) {
         start(&state.gfx.fadeout);
         start_after(&state.game.started, FADE_TICKS);
     }
+
+    // ESC on native desktop: fade out then quit
+    #if !defined(__EMSCRIPTEN__)
+        if (state.input.esc) {
+            input_disable();
+            state.input.esc = false;
+            start(&state.gfx.fadeout);
+            start_after(&state.gfx.quit, FADE_TICKS);
+        }
+    #endif
 }
 
 /*== GFX SUBSYSTEM ===========================================================*/
@@ -2921,6 +2943,7 @@ static void gfx_init(void) {
     });
     disable(&state.gfx.fadein);
     disable(&state.gfx.fadeout);
+    disable(&state.gfx.quit);
     state.gfx.fade = 0xFF;
     spr_clear();
     gfx_decode_tiles();
