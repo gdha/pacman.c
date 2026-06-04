@@ -26,5 +26,5 @@ More than four decades later, Pac-Man remains the best-selling coin-operated arc
 
 - [The Pac-Man Dossier (Jamey Pittman)](https://pacman.holenet.info/)
 - [The Strong National Museum of Play: Pac-Man (World Video Game Hall of Fame)](https://www.museumofplay.org/games/pac-man/)
-- [Google Doodles Archive: PAC-MAN](https://doodles.google/doodle/30th-anniversary-of-pac-man/)
-- [Smithsonian Magazine: "Pac-Man Turns 30"](https://www.smithsonianmag.com/arts-culture/pac-man-turns-30-132375707/)
+- [PAC-MAN history](https://www.pacman.com/en/history/)
+- [Smithsonian Magazine: "Pac-Man Turns 35"](https://www.smithsonianmag.com/smart-news/pac-man-turns-35-month-180955401/)
