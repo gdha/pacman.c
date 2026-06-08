@@ -74,6 +74,12 @@ To run the compilation result in the system web browser:
 Install the Debian packaging dependencies, then run:
 
 ```bash
+sudo apt install build-essential debhelper-compat cmake libasound2-dev libx11-dev libxcursor-dev libxi-dev libgl1-mesa-dev
+```
+
+Then build the package:
+
+```bash
 make deb
 ```
 
