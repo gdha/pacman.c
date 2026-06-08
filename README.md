@@ -69,6 +69,22 @@ To run the compilation result in the system web browser:
 > emrun pacman.html
 ```
 
+## Build Debian package
+
+Install the Debian packaging dependencies, then run:
+
+```bash
+sudo apt install build-essential debhelper-compat cmake libasound2-dev libx11-dev libxcursor-dev libxi-dev libgl1-mesa-dev
+```
+
+Then build the package:
+
+```bash
+make deb
+```
+
+The generated `.deb` package files will be written to the parent directory.
+
 ## IDE Support
 
 On Windows with Visual Studio cmake will automatically create a **Visual Studio** solution file which can be opened with ```cmake --open .```:
