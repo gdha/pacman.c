@@ -1,10 +1,12 @@
 #!/usr/bin/make -f
 
+include /usr/share/dpkg/architecture.mk
+
 %:
 	dh $@ --buildsystem=cmake
 
 override_dh_auto_install:
 	install -d debian/pacman-c/usr/games
-	install -m 0755 build/pacman debian/pacman-c/usr/games/pacman
+	install -m 0755 obj-$(DEB_HOST_GNU_TYPE)/pacman debian/pacman-c/usr/games/pacman
 	install -d debian/pacman-c/usr/share/man/man6
 	install -m 0644 pacman.c.6 debian/pacman-c/usr/share/man/man6/pacman.6
