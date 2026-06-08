@@ -1,0 +1,15 @@
+Source: pacman-c
+Section: games
+Priority: optional
+Maintainer: Debian Pacman.c Maintainers <packagers@example.com>
+Build-Depends: debhelper-compat (= 13), cmake, libasound2-dev, libx11-dev, libxcursor-dev, libxi-dev, libgl1-mesa-dev
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
+Homepage: https://github.com/floooh/pacman.c
+
+Package: pacman-c
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Pacman clone written in C99
+ Lightweight desktop Pacman clone written in C99 and built with CMake.
+ It uses the sokol single-file platform abstraction and audio/graphics backend.
