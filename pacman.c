@@ -418,6 +418,8 @@ typedef struct {
     uint8_t flags;          // combination of soundflag_t (active voices)
 } sound_t;
 
+static bool pending_quit;
+
 // all state is in a single nested struct
 static struct {
 
@@ -692,6 +694,7 @@ static bool now(trigger_t t);
 
 static void intro_tick(void);
 static void game_tick(void);
+static void begin_quit_fade(void);
 
 static void input_enable(void);
 static void input_disable(void);
@@ -784,12 +787,19 @@ static void frame(void) {
                 state.timing.tick >= state.gfx.quit.tick)
             {
                 state.gfx.quit.tick = DISABLED_TICKS;
-                sapp_request_quit();
+                snd_clear();
+                pending_quit = true;
             }
         #endif
     }
     gfx_draw();
     snd_frame(frame_time_ns);
+    #if !defined(__EMSCRIPTEN__)
+        if (pending_quit) {
+            pending_quit = false;
+            cleanup();
+        }
+    #endif
 }
 
 static void input(const sapp_event* ev) {
@@ -800,10 +810,12 @@ static void input(const sapp_event* ev) {
     if ((ev->type == SAPP_EVENTTYPE_KEY_DOWN) || (ev->type == SAPP_EVENTTYPE_KEY_UP)) {
         bool btn_down = ev->type == SAPP_EVENTTYPE_KEY_DOWN;
         #if !defined(__EMSCRIPTEN__)
-            // always track ESC regardless of whether input is enabled,
-            // so game_tick/intro_tick can do a clean fade-out before quitting
+            // latch ESC on key-down only; KEY_UP must not clear the flag before
+            // game_tick/intro_tick can schedule a clean fade-out and quit
             if (ev->key_code == SAPP_KEYCODE_ESCAPE) {
-                state.input.esc = btn_down;
+                if (btn_down) {
+                    state.input.esc = true;
+                }
                 return;
             }
         #endif
@@ -841,6 +853,11 @@ static void input(const sapp_event* ev) {
 static void cleanup(void) {
     snd_shutdown();
     gfx_shutdown();
+    // Sokol's GLX/X11 teardown after cleanup_cb can hang on some Linux setups;
+    // exit here once our resources are released (window-close uses the same path).
+    #if !defined(__EMSCRIPTEN__)
+        exit(0);
+    #endif
 }
 
 /*== GRAB BAG OF HELPER FUNCTIONS ============================================*/
@@ -945,6 +962,17 @@ static void input_disable(void) {
 static void input_enable(void) {
     state.input.enabled = true;
 }
+
+// fade out and quit after FADE_TICKS (native desktop ESC)
+#if !defined(__EMSCRIPTEN__)
+static void begin_quit_fade(void) {
+    input_disable();
+    state.input.esc = false;
+    snd_clear();
+    start(&state.gfx.fadeout);
+    start_after(&state.gfx.quit, FADE_TICKS);
+}
+#endif
 
 // get the current input as dir_t
 static dir_t input_dir(dir_t default_dir) {
@@ -2326,10 +2354,7 @@ static void game_tick(void) {
         }
     #else
         if (state.input.esc) {
-            input_disable();
-            state.input.esc = false;
-            start(&state.gfx.fadeout);
-            start_after(&state.gfx.quit, FADE_TICKS);
+            begin_quit_fade();
         }
     #endif
 
@@ -2435,10 +2460,7 @@ static void intro_tick(void) {
     // ESC on native desktop: fade out then quit
     #if !defined(__EMSCRIPTEN__)
         if (state.input.esc) {
-            input_disable();
-            state.input.esc = false;
-            start(&state.gfx.fadeout);
-            start_after(&state.gfx.quit, FADE_TICKS);
+            begin_quit_fade();
         }
     #endif
 }
@@ -3180,7 +3202,9 @@ static void snd_init(void) {
 }
 
 static void snd_shutdown(void) {
-    saudio_shutdown();
+    if (saudio_isvalid()) {
+        saudio_shutdown();
+    }
 }
 
 // the snd_voice_tick() function updates the Namco sound generator and must be called with 96 kHz
