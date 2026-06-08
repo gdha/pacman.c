@@ -1,4 +1,4 @@
-/tmp/workspace/gdha/pacman.c/obj-x86_64-linux-gnu/CMakeFiles/sokol.dir
-/tmp/workspace/gdha/pacman.c/obj-x86_64-linux-gnu/CMakeFiles/pacman.dir
-/tmp/workspace/gdha/pacman.c/obj-x86_64-linux-gnu/CMakeFiles/edit_cache.dir
-/tmp/workspace/gdha/pacman.c/obj-x86_64-linux-gnu/CMakeFiles/rebuild_cache.dir
+/home/gdha/projects/gdha/pacman.c/obj-x86_64-linux-gnu/CMakeFiles/sokol.dir
+/home/gdha/projects/gdha/pacman.c/obj-x86_64-linux-gnu/CMakeFiles/pacman.dir
+/home/gdha/projects/gdha/pacman.c/obj-x86_64-linux-gnu/CMakeFiles/edit_cache.dir
+/home/gdha/projects/gdha/pacman.c/obj-x86_64-linux-gnu/CMakeFiles/rebuild_cache.dir

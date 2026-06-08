@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/tmp/workspace/gdha/pacman.c/sokol/sokol.c" "CMakeFiles/sokol.dir/sokol/sokol.c.o" "gcc" "CMakeFiles/sokol.dir/sokol/sokol.c.o.d"
+  "/home/gdha/projects/gdha/pacman.c/sokol/sokol.c" "CMakeFiles/sokol.dir/sokol/sokol.c.o" "gcc" "CMakeFiles/sokol.dir/sokol/sokol.c.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

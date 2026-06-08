@@ -1,6 +1,6 @@
-CMakeFiles/pacman.dir/pacman.c.o: /tmp/workspace/gdha/pacman.c/pacman.c \
- /usr/include/stdc-predef.h \
- /tmp/workspace/gdha/pacman.c/sokol/sokol_app.h \
+CMakeFiles/pacman.dir/pacman.c.o: \
+ /home/gdha/projects/gdha/pacman.c/pacman.c /usr/include/stdc-predef.h \
+ /home/gdha/projects/gdha/pacman.c/sokol/sokol_app.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -19,11 +19,11 @@ CMakeFiles/pacman.dir/pacman.c.o: /tmp/workspace/gdha/pacman.c/pacman.c \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdbool.h \
- /tmp/workspace/gdha/pacman.c/sokol/sokol_gfx.h \
- /tmp/workspace/gdha/pacman.c/sokol/sokol_audio.h \
- /tmp/workspace/gdha/pacman.c/sokol/sokol_log.h \
- /tmp/workspace/gdha/pacman.c/sokol/sokol_glue.h \
- /tmp/workspace/gdha/pacman.c/sokol/sokol_letterbox.h \
+ /home/gdha/projects/gdha/pacman.c/sokol/sokol_gfx.h \
+ /home/gdha/projects/gdha/pacman.c/sokol/sokol_audio.h \
+ /home/gdha/projects/gdha/pacman.c/sokol/sokol_log.h \
+ /home/gdha/projects/gdha/pacman.c/sokol/sokol_glue.h \
+ /home/gdha/projects/gdha/pacman.c/sokol/sokol_letterbox.h \
  /usr/include/assert.h /usr/include/string.h \
  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \

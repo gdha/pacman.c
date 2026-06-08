@@ -8,8 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/tmp/workspace/gdha/pacman.c/pacman.c" "CMakeFiles/pacman.dir/pacman.c.o" "gcc" "CMakeFiles/pacman.dir/pacman.c.o.d"
-  "" "pacman" "gcc" "CMakeFiles/pacman.dir/link.d"
+  "/home/gdha/projects/gdha/pacman.c/pacman.c" "CMakeFiles/pacman.dir/pacman.c.o" "gcc" "CMakeFiles/pacman.dir/pacman.c.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

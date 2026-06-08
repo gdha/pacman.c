@@ -1,6 +1,7 @@
 CMakeFiles/sokol.dir/sokol/sokol.c.o: \
- /tmp/workspace/gdha/pacman.c/sokol/sokol.c /usr/include/stdc-predef.h \
- /tmp/workspace/gdha/pacman.c/sokol/sokol_app.h \
+ /home/gdha/projects/gdha/pacman.c/sokol/sokol.c \
+ /usr/include/stdc-predef.h \
+ /home/gdha/projects/gdha/pacman.c/sokol/sokol_app.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -105,9 +106,9 @@ CMakeFiles/sokol.dir/sokol/sokol.c.o: \
  /usr/include/poll.h /usr/include/x86_64-linux-gnu/sys/poll.h \
  /usr/include/x86_64-linux-gnu/bits/poll.h \
  /usr/include/x86_64-linux-gnu/bits/poll2.h \
- /tmp/workspace/gdha/pacman.c/sokol/sokol_gfx.h \
+ /home/gdha/projects/gdha/pacman.c/sokol/sokol_gfx.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/float.h \
- /tmp/workspace/gdha/pacman.c/sokol/sokol_audio.h \
+ /home/gdha/projects/gdha/pacman.c/sokol/sokol_audio.h \
  /usr/include/alsa/asoundlib.h /usr/include/unistd.h \
  /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
  /usr/include/x86_64-linux-gnu/bits/environments.h \
@@ -134,10 +135,10 @@ CMakeFiles/sokol.dir/sokol/sokol.c.o: \
  /usr/include/alsa/control.h /usr/include/alsa/mixer.h \
  /usr/include/alsa/seq_event.h /usr/include/alsa/seq.h \
  /usr/include/alsa/seqmid.h /usr/include/alsa/seq_midi_event.h \
- /tmp/workspace/gdha/pacman.c/sokol/sokol_glue.h \
- /tmp/workspace/gdha/pacman.c/sokol/sokol_log.h /usr/include/syslog.h \
- /usr/include/x86_64-linux-gnu/sys/syslog.h \
+ /home/gdha/projects/gdha/pacman.c/sokol/sokol_glue.h \
+ /home/gdha/projects/gdha/pacman.c/sokol/sokol_log.h \
+ /usr/include/syslog.h /usr/include/x86_64-linux-gnu/sys/syslog.h \
  /usr/include/x86_64-linux-gnu/bits/syslog-path.h \
  /usr/include/x86_64-linux-gnu/bits/syslog.h \
  /usr/include/x86_64-linux-gnu/bits/syslog-decl.h \
- /tmp/workspace/gdha/pacman.c/sokol/sokol_letterbox.h
+ /home/gdha/projects/gdha/pacman.c/sokol/sokol_letterbox.h

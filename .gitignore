@@ -4,3 +4,7 @@ build/
 # nix
 result/
 .direnv/
+
+a.out
+*.a
+*.c.o
